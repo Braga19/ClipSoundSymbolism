@@ -3,7 +3,8 @@ import os
 
 parent_dir = os.path.dirname(os.getcwd())
 dataset_dir = os.path.join(parent_dir, 'dataset')
-classifiers_dir = os.path.join(dataset_dir, 'classification_results')
+results_dir = os.path.join(parent_dir, 'results')
+classifiers_dir = os.path.join(results_dir, 'classification')
 
 def characters_df():
 

@@ -14,6 +14,7 @@ import plotly.io as pio
 
 import numpy as np
 
+
 gender_dict = {'Stable Diffusion' : read.prepare_dataset_for_pearson('gender', 'sd', 'female_prob'),
              'VQGAN-CLIP' : read.prepare_dataset_for_pearson('gender', 'vqgan', 'female_prob')}
 
@@ -36,8 +37,9 @@ def correlation_scatterplot(df, img_generator,attribute, tick_top, tick_bottom, 
         xlimits = (-50, 50)
         ylimits = (0, 1)
 
+        #color combination choosed with ColorBrewer for colorblind friendly visualization
         colors = {'real': '#d95f02', 'madeup': '#1b9e77', 'talking': '#7570b3'}
-        # Get the unique types    
+           
         unique_types = ['real', 'madeup', 'talking']
         
         # Create a subplot with 1 row and as many columns as there are unique types

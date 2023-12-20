@@ -2,13 +2,20 @@ import pandas as pd
 import os 
 
 parent_dir = os.path.dirname(os.getcwd())
-dataset_dir = os.path.join(parent_dir, 'dataset')
+text_dataset_dir = os.path.join(parent_dir, 'dataset/texts')
+image_dataset_dir = os.path.join(parent_dir, 'dataset/images')
 results_dir = os.path.join(parent_dir, 'results')
 classifiers_dir = os.path.join(results_dir, 'classification')
 
 def characters_df():
 
-    df = pd.read_csv(os.path.join(dataset_dir, 'avgRatings_annotated.csv'))
+    df = pd.read_csv(os.path.join(text_dataset_dir, 'avgRatings_annotated.csv'))
+
+    return df.copy()
+
+def emotions_df():
+
+    df = pd.read_csv(os.path.join(text_dataset_dir, 'nonsense-words-emotion-intensities.csv'), sep=';')
 
     return df.copy()
 

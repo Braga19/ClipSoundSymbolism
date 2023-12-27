@@ -154,7 +154,7 @@ def main():
 
     return similarity_score
 
+if __name__ == '__main__':
 
-similarity_score = main()
-
-similarity_score.to_csv('similarity_score.csv')
+    similarity_score = main()
+    similarity_score.to_csv('similarity_score.csv')

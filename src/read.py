@@ -57,5 +57,46 @@ def prepare_dataset_for_pearson(attribute, img_generator, prob_col1):
     
     return df.groupby(['name', 'classifier'], as_index=False).agg({f'{prob_col1}': 'mean','type': 'first', 'rating.mean': 'first'})
     
+def get_similarity_score_avg():
 
+    '''
+    Get the average of the cosine similarity for each words and pseudowords and return a pandas df groupby emotions
+    '''
+    df = pd.read_csv(os.path.join(results_dir, 'cosine_similarity/similarity_score.csv'))
 
+    means = []
+    for i in range(1, df.shape[1], 500):
+        
+        means.append(df.iloc[:, i:i+500].mean(axis=1))
+    
+    emotion_dict = {0: 'Anger', 1: 'Disgust', 2: 'Fear', 3: 'Joy', 4: 'Sadness', 5: 'Surprise'}
+
+    similarity_mean = {}
+
+    for n, mean_list in enumerate(means):
+
+        similarity_mean[emotion_dict[n]] = {}
+
+        for i, mean in enumerate(mean_list):
+
+            similarity_mean[emotion_dict[n]][df.iloc[i,0]] =  mean
+    
+    similarity_mean_df = pd.DataFrame.from_dict(similarity_mean)
+
+    similarity_mean_df = similarity_mean_df.reset_index().rename(columns={'index': 'Word'})
+
+    return similarity_mean_df
+
+def dataset_for_pearson_emotion():
+
+    '''
+    Merge the similarity_score_avg with the df_emotion for computing pearson correlation
+    '''
+
+    df_similarity_avg = get_similarity_score_avg()
+    df_emotion = emotions_df()
+
+    # x gold-standard y predicted
+    merged_df =  df_emotion.merge(df_similarity_avg, on='Word').drop(columns=['IDs', 'ARPA Pron'])
+
+    return merged_df

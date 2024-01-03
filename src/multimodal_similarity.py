@@ -9,10 +9,12 @@ from torch.utils.data import Dataset
 import clip
 from PIL import Image
 
-# Define constants
+import fasttext
+
 PARENT_DIR = os.path.dirname(os.getcwd())
+print(PARENT_DIR)
 SRC_DIR = os.path.join(PARENT_DIR, 'src')
-ROOT_DIR = os.path.join(PARENT_DIR, "dataset/images/AffectNet_face")
+ROOT_DIR = os.path.abspath(os.path.join(PARENT_DIR, "dataset/images/AffectNet_face"))
 EMOTIONS = ["Anger", "Disgust", "Fear", "Joy", "Sadness", "Surprise"]
 EMOTION_DICT = {0: 'Anger', 1: 'Disgust', 2: 'Fear', 3: 'Joy', 4: 'Sadness', 5: 'Surprise'}
 
@@ -48,6 +50,7 @@ def preprocess_images(root_dir):
     class_id = []
     for i, emotion in enumerate(EMOTIONS):
         emotion_dir = os.path.join(root_dir, emotion)
+        #print(emotion_dir)
         for image_name in os.listdir(emotion_dir):
             image_path = os.path.join(emotion_dir, image_name)
             images.append(image_path)
@@ -132,21 +135,17 @@ def compute_similarity_score(image_embeddings, text_embeddings):
 
 
 def main():
-    """Main function."""
-    # Preprocess images
+    
     images, class_id = preprocess_images(ROOT_DIR)
+    print('yes2')
 
-    # Get emotion words and pseudowords
     emotion_df = read.emotions_df()
 
-    # Initialize image dataset
     img_dataset = AffectNet(images, class_id)
-
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model, preprocess = clip.load("ViT-B/32", device=device)
 
-    
     text_embeddings = create_text_embeddings(emotion_df, model, device)
     image_embeddings = create_image_embeddings(img_dataset, model, preprocess, device)
 
@@ -154,7 +153,9 @@ def main():
 
     return similarity_score
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     similarity_score = main()
-    similarity_score.to_csv('similarity_score.csv')
+    output_dir = os.path.join(SRC_DIR, 'cosine_similarity')
+    similarity_score.to_csv(os.path.join(output_dir,'similarity_score_clip.csv'))

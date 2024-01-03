@@ -1,12 +1,13 @@
 import pandas as pd 
 import os 
 
-parent_dir = os.path.dirname(os.getcwd())
+parent_dir = os.getcwd()
 text_dataset_dir = os.path.join(parent_dir, 'dataset/texts')
 image_dataset_dir = os.path.join(parent_dir, 'dataset/images')
 results_dir = os.path.join(parent_dir, 'results')
 classifiers_dir = os.path.join(results_dir, 'classification')
 
+# Reading datasets 
 def characters_df():
 
     df = pd.read_csv(os.path.join(text_dataset_dir, 'avgRatings_annotated.csv'))
@@ -19,6 +20,14 @@ def emotions_df():
 
     return df.copy()
 
+def emotional_words():
+
+    df = pd.read_excel(os.path.join(text_dataset_dir, 'emotional_words.xlsx'))
+
+    return df.copy()
+
+
+# Modifying datasets for analysis
 def get_subset(attribute):
 
     '''get subset of characters_df scored on specific attribute (gender or age)'''
@@ -100,3 +109,4 @@ def dataset_for_pearson_emotion():
     merged_df =  df_emotion.merge(df_similarity_avg, on='Word').drop(columns=['IDs', 'ARPA Pron'])
 
     return merged_df
+

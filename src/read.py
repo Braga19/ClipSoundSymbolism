@@ -2,6 +2,7 @@ import pandas as pd
 import os 
 
 parent_dir = os.getcwd()
+print(parent_dir)
 text_dataset_dir = os.path.join(parent_dir, 'dataset/texts')
 image_dataset_dir = os.path.join(parent_dir, 'dataset/images')
 results_dir = os.path.join(parent_dir, 'results')
@@ -14,7 +15,7 @@ def characters_df():
 
     return df.copy()
 
-def emotions_df():
+def sabbatino_et_al():
 
     df = pd.read_csv(os.path.join(text_dataset_dir, 'nonsense-words-emotion-intensities.csv'), sep=';')
 
@@ -103,7 +104,7 @@ def dataset_for_pearson_emotion():
     '''
 
     df_similarity_avg = get_similarity_score_avg()
-    df_emotion = emotions_df()
+    df_emotion = sabbatino_et_al()
 
     # x gold-standard y predicted
     merged_df =  df_emotion.merge(df_similarity_avg, on='Word').drop(columns=['IDs', 'ARPA Pron'])

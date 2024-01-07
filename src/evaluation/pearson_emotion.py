@@ -3,17 +3,15 @@ import sys
 import pandas as pd 
 import pingouin as pg 
 
-parent_dir = os.path.dirname(os.getcwd())
+
+parent_dir = os.getcwd()
 src_dir = os.path.join(parent_dir, 'src')
+text_dataset_dir = os.path.join(parent_dir, 'dataset/texts')
+results_dir = os.path.join(parent_dir, 'results')
 
 sys.path.insert(0, src_dir)
 import read
 
-
-emotion_score_merge_df = read.dataset_for_pearson_emotion()
-
-emotion_types = {'real' : emotion_score_merge_df[emotion_score_merge_df['Real Word Flag'] == 1],
-              'pseudowords' : emotion_score_merge_df[emotion_score_merge_df['Real Word Flag'] == 0]}
 
 def get_pearson(my_dict):
 
@@ -30,13 +28,20 @@ def get_pearson(my_dict):
 
     pearson_all = pd.DataFrame()
 
+
     for typ, df in my_dict.items():
+
+        if df.empty:
+            continue
+        
         for emotion in emotion_dict.values():
 
-            pearson_df = pg.corr(df[f'{emotion}_x'], df[f'{emotion}_y'])
+            gold_standard = df[f'{emotion}_x']
+            predicted = df[f'{emotion}_y'].apply(lambda x: x[0])
+        
+            pearson_df = pg.corr(gold_standard, predicted)
             pearson_df['emotion'] = emotion
             pearson_df['type'] = typ
-
             pearson_all = pd.concat([pearson_all, pearson_df], ignore_index=True)
 
     return pearson_all
@@ -53,20 +58,39 @@ def format_dataframe(df):
         'type': 'Type'
     }, inplace=True)
 
-    df.set_index(['Emotion','Type'], inplace=True)
-
+    df.set_index(['Emotion', 'Type'], inplace=True)
+    df = df.drop(columns=['Bayes Factor','Statistical Power'])
     return df
 
+def read_pickle(file_name):
+    return pd.read_pickle(os.path.join(results_dir, f'cosine_similarity/avg_similarity/{file_name}'))
+
+def write_data(df, file_name):
+    output_dir = os.path.abspath(os.path.join(results_dir, 'pearson'))
+    df.to_csv(os.path.join(output_dir, file_name))
+
 def main():
+    
 
-    correlation_df = get_pearson(emotion_types)
+    similarity_dfs = ['avg_sabbatino_multimodal_similarity_clip.pkl', 'avg_textual_similarity_clip.pkl', 'avg_textual_similarity_ft.pkl']
+    output_files = ['pearson_sabbatino_multimodal.csv', 'pearson_textual_clip.csv', 'pearson_textual_ft.csv']
+    sabbatino_df = read.sabbatino_et_al()
+    merged_dict = {}
+    for similarity_df, output_file in zip(similarity_dfs, output_files):
+        
+        df = read_pickle(similarity_df)
+        # x gold-standard y predicted
+        merged_df = sabbatino_df.merge(df, on='Word').drop(columns=['IDs', 'ARPA Pron'])
 
-    correlation_df = format_dataframe(correlation_df)
+        merged_dict['real'] = merged_df[merged_df['Real Word Flag'] == 1]
+        merged_dict['pseudowords'] = merged_df[merged_df['Real Word Flag'] == 0]
 
-    return correlation_df
+        correlation_df = get_pearson(merged_dict)         
+        correlation_df = format_dataframe(correlation_df)
+        write_data(correlation_df, output_file)
 
 
-correlation_df = main()
+if __name__ == "__main__":
 
-correlation_df.to_csv('emotion_pearson.csv')
+   main()
 

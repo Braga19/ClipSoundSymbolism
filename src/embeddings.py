@@ -56,12 +56,13 @@ def create_text_embeddings_clip(my_dict, model, device):
         my_dict (dictionary): A dictionary containing two dataset divided by real and pseudowords
         with words in the 'Word' column.
         model: The model (CLIP) used to encode the text inputs into feature vectors.
-        device: The device on which the computations will be performed.
+        device: The device on which the computations will be performed
+        context (None): if True, words are embedded with the query 'a(n) <word> face'.
         
     Returns:
         dict: A dictionary with nested dictionnary mapping each word to its corresponding feature vector normalized.
     '''
-    
+
     text_embeddings = {}
 
     for word_type, df in my_dict.items():
@@ -139,7 +140,7 @@ def create_text_embeddings_ft(my_dict, model):
     Returns:
         text_embeddings (dict): a dictionnary with nested dictionnary mapping each word to its corresponding feature vector normalized..
     """
-    
+
 
     text_embeddings = {}
 
@@ -158,3 +159,40 @@ def create_text_embeddings_ft(my_dict, model):
 
 
     return text_embeddings
+
+
+
+def create_text_embeddings_sabbatino(df_emotion, model, device):
+    '''
+    This function creates text embeddings for a list of words using a given model.
+    
+    Args:
+        df_emotion (DataFrame): A DataFrame containing the words in the 'Word' column.
+        model: The model used to encode the text inputs into feature vectors.
+        device: The device on which the computations will be performed.
+        
+    Returns:
+        dict: A dictionary mapping each word to its corresponding feature vector normalized.
+    '''
+    
+
+    words = df_emotion.Word.tolist()
+    queries = [f'an {word} face' if starts_with_vowel(word) else f'a {word} face' for word in words]
+
+    text_inputs = clip.tokenize(queries).to(device)
+
+    with torch.no_grad():
+        text_features = model.encode_text(text_inputs)
+        text_features /= text_features.norm(dim=-1, keepdim=True)
+
+    if 'Label' in df_emotion.columns:
+        labels = df_emotion.Label.tolist()
+        text_embeddings = {f'{words[n]}_{labels[n]}': embedding for n, embedding in enumerate(text_features)}
+    
+    else:
+        text_embeddings = {words[n]: embedding for n, embedding in enumerate(text_features)}
+
+    
+    return text_embeddings
+    
+

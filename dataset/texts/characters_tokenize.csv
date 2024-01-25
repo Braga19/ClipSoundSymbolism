@@ -1,0 +1,180 @@
+name,tokens,length,type
+Adelaide,['adelaide</w>'],1,real
+Adelina,"['adel', 'ina</w>']",2,real
+Alasdair,"['alas', 'dair</w>']",2,real
+Alastor,"['al', 'astor</w>']",2,madeup
+Alecto,"['alec', 'to</w>']",2,madeup
+Alice,['alice</w>'],1,real
+Allie,['allie</w>'],1,real
+Amabala,"['am', 'ab', 'ala</w>']",3,madeup
+Apple,['apple</w>'],1,talking
+April,['april</w>'],1,talking
+Araminta,"['ar', 'amin', 'ta</w>']",3,madeup
+Arcturus,"['arc', 'tur', 'us</w>']",3,madeup
+Argus,['argus</w>'],1,madeup
+Arobynn,"['ar', 'ob', 'ynn</w>']",3,madeup
+Asim,['asim</w>'],1,madeup
+Ball,['ball</w>'],1,talking
+Beatrice,['beatrice</w>'],1,real
+Berry,['berry</w>'],1,talking
+Blackberry,['blackberry</w>'],1,talking
+Blue,['blue</w>'],1,talking
+Bonny,"['bon', 'ny</w>']",2,talking
+Brilliantine,"['brilli', 'antine</w>']",2,talking
+Brum,['brum</w>'],1,madeup
+Cackle,"['c', 'ack', 'le</w>']",3,talking
+Cardan,"['car', 'dan</w>']",2,madeup
+Caroline,['caroline</w>'],1,real
+Chaol,"['cha', 'ol</w>']",2,madeup
+Chi,['chi</w>'],1,madeup
+Chloe,['chloe</w>'],1,real
+Claire,['claire</w>'],1,real
+Clove,"['c', 'love</w>']",2,talking
+Cooki,"['coo', 'ki</w>']",2,madeup
+Coot,"['coo', 't</w>']",2,talking
+Dal,['dal</w>'],1,talking
+Dalip,"['dali', 'p</w>']",2,madeup
+Damon,['damon</w>'],1,real
+Dark,['dark</w>'],1,talking
+Day,['day</w>'],1,talking
+Derrick,['derrick</w>'],1,real
+Desire,['desire</w>'],1,talking
+Diamond,['diamond</w>'],1,talking
+Ditto,"['dit', 'to</w>']",2,talking
+Dove,['dove</w>'],1,talking
+Drill,['drill</w>'],1,talking
+Dumpa,"['dump', 'a</w>']",2,madeup
+Elena,['elena</w>'],1,real
+Elide,"['eli', 'de</w>']",2,madeup
+Enid,"['en', 'id</w>']",2,real
+Ethel,['ethel</w>'],1,real
+Farder,"['far', 'der</w>']",2,madeup
+Fenrir,"['fen', 'rir</w>']",2,madeup
+Fiorella,"['fi', 'o', 'rella</w>']",3,real
+Flick,['flick</w>'],1,talking
+Flora,['flora</w>'],1,talking
+Fortuna,"['fortun', 'a</w>']",2,madeup
+Fox,['fox</w>'],1,talking
+Francis,['francis</w>'],1,real
+Fred,['fred</w>'],1,real
+Freddie,['freddie</w>'],1,real
+Gale,['gale</w>'],1,talking
+George,['george</w>'],1,real
+Gerald,['gerald</w>'],1,real
+Gerard,['gerard</w>'],1,real
+Ginny,"['gin', 'ny</w>']",2,real
+Glimmer,"['gli', 'mmer</w>']",2,talking
+Gmork,"['g', 'mor', 'k</w>']",3,madeup
+Goha,"['go', 'ha</w>']",2,madeup
+Goth,['goth</w>'],1,talking
+Griphook,"['gri', 'ph', 'ook</w>']",3,madeup
+Ground,['ground</w>'],1,talking
+Grunter,"['grun', 'ter</w>']",2,madeup
+Guy,['guy</w>'],1,talking
+Hannerl,"['hann', 'er', 'l</w>']",3,madeup
+Harold,['harold</w>'],1,real
+Henry,['henry</w>'],1,real
+Hepzibah,"['hep', 'zi', 'bah</w>']",3,madeup
+Hope,['hope</w>'],1,talking
+Ian,['ian</w>'],1,real
+Inej,"['ine', 'j</w>']",2,madeup
+Ione,"['i', 'one</w>']",2,madeup
+Iorek,"['io', 'rek</w>']",2,madeup
+Jackie,['jackie</w>'],1,real
+Jadis,"['jad', 'is</w>']",2,real
+Jewel,['jewel</w>'],1,talking
+Joseph,['joseph</w>'],1,real
+Joy,['joy</w>'],1,talking
+Jude,"['ju', 'de</w>']",2,real
+Julia,['julia</w>'],1,real
+Jungli,"['jun', 'gli</w>']",2,madeup
+Just,['just</w>'],1,talking
+Kaisa,"['ka', 'isa</w>']",2,madeup
+Karl,['karl</w>'],1,real
+Kathryn,['kathryn</w>'],1,real
+Kaz,['kaz</w>'],1,madeup
+Kitty,['kitty</w>'],1,talking
+Klaus,['klaus</w>'],1,real
+Kreacher,"['k', 'reach', 'er</w>']",3,madeup
+Lak,['lak</w>'],1,madeup
+Lark,['lark</w>'],1,talking
+Lavender,['lavender</w>'],1,talking
+Lee,['lee</w>'],1,real
+Levana,"['lev', 'ana</w>']",2,madeup
+Lorcan,"['lor', 'can</w>']",2,madeup
+Lucy,['lucy</w>'],1,real
+Luft,"['lu', 'ft</w>']",2,madeup
+Lyra,"['ly', 'ra</w>']",2,real
+Marion,['marion</w>'],1,real
+Marisa,['marisa</w>'],1,real
+Marvel,['marvel</w>'],1,talking
+Matthias,['matthias</w>'],1,real
+Maud,"['ma', 'ud</w>']",2,real
+Mildred,"['mil', 'dred</w>']",2,real
+Mina,['mina</w>'],1,real
+Minna,"['min', 'na</w>']",2,madeup
+Miskouri,"['mis', 'kour', 'i</w>']",3,madeup
+Mogget,"['mo', 'g', 'get</w>']",3,madeup
+Molly,['molly</w>'],1,real
+Morgra,"['mor', 'gra</w>']",2,madeup
+Mouse,['mouse</w>'],1,talking
+Muffet,"['mu', 'ffe', 't</w>']",3,madeup
+Mundungus,"['mun', 'dun', 'gus</w>']",3,madeup
+Myrtle,['myrtle</w>'],1,talking
+Natasha,['natasha</w>'],1,real
+Neoma,"['ne', 'oma</w>']",2,madeup
+Nergui,"['ner', 'gui</w>']",2,madeup
+Nessa,"['ne', 'ssa</w>']",2,real
+Nina,['nina</w>'],1,real
+Nitasha,"['nit', 'asha</w>']",2,madeup
+Nova,['nova</w>'],1,talking
+Parrish,['parrish</w>'],1,talking
+Pearl,['pearl</w>'],1,talking
+Penthe,"['pen', 'the</w>']",2,madeup
+Peter,['peter</w>'],1,real
+Poop,['poop</w>'],1,talking
+Ralph,['ralph</w>'],1,real
+Roach,['roach</w>'],1,talking
+Robbo,"['robb', 'o</w>']",2,madeup
+Rosalind,"['rosal', 'ind</w>']",2,real
+Saiorse,"['sa', 'ior', 'se</w>']",3,madeup
+Schaffa,"['schaf', 'fa</w>']",2,madeup
+Scotch,['scotch</w>'],1,talking
+Scullery,"['scul', 'lery</w>']",2,talking
+Serafina,"['ser', 'af', 'ina</w>']",3,madeup
+Silky,['silky</w>'],1,talking
+Simon,['simon</w>'],1,real
+Skellig,"['sk', 'elli', 'g</w>']",3,madeup
+Skinner,['skinner</w>'],1,talking
+Spark,['spark</w>'],1,talking
+Sparrow,['sparrow</w>'],1,talking
+Spink,"['sp', 'ink</w>']",2,madeup
+Sprout,['sprout</w>'],1,talking
+Stanley,['stanley</w>'],1,real
+Steepy,"['steep', 'y</w>']",2,talking
+Steg,"['ste', 'g</w>']",2,madeup
+Stuart,['stuart</w>'],1,real
+Sunny,['sunny</w>'],1,talking
+Susan,['susan</w>'],1,real
+Sway,['sway</w>'],1,talking
+Sybill,"['sy', 'bill</w>']",2,real
+Talentino,"['talent', 'ino</w>']",2,madeup
+Tansy,"['tan', 'sy</w>']",2,talking
+Tasha,['tasha</w>'],1,madeup
+Tenar,"['ten', 'ar</w>']",2,madeup
+Thresh,"['thre', 'sh</w>']",2,talking
+Titania,"['tit', 'ania</w>']",2,madeup
+Tobias,['tobias</w>'],1,real
+Touchstone,"['touch', 'stone</w>']",2,talking
+Travers,"['tra', 'vers</w>']",2,talking
+Tristram,"['tri', 'stra', 'm</w>']",3,real
+Violet,['violet</w>'],1,talking
+Will,['will</w>'],1,real
+William,['william</w>'],1,real
+Winky,"['win', 'ky</w>']",2,talking
+Wolf,['wolf</w>'],1,talking
+Wren,['wren</w>'],1,talking
+Yak,['yak</w>'],1,talking
+Yozadah,"['yo', 'zad', 'ah</w>']",3,madeup
+Zahara,"['za', 'hara</w>']",2,madeup
+Zubaida,"['zu', 'bai', 'da</w>']",3,madeup

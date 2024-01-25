@@ -83,6 +83,7 @@ def correlation_scatterplot(df, img_generator,attribute, tick_top, tick_bottom, 
         pio.write_html(fig, os.path.join(filepath, f'plots/{attribute}/html/{img_generator}_{classifier}_{attribute}.html'))
 
 
+
 for img_gen, df in gender_dict.items():
 
     correlation_scatterplot(df, img_gen, 'gender', 'female', 'male', 'female_prob')

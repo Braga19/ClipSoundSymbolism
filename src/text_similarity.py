@@ -19,7 +19,7 @@ import embeddings
 
 
 real_words_df = read.emotional_words()
-pseudowords_df = read.emotions_df()
+pseudowords_df = read.sabbatino_et_al()
 pseudowords_df = pseudowords_df[pseudowords_df['Real Word Flag'] == 0].reset_index(drop=True)
 words_dict = {'real': real_words_df,
               'pseudowords': pseudowords_df}
@@ -61,7 +61,7 @@ def main():
 
     text_embeddings_ft = embeddings.create_text_embeddings_ft(words_dict, ft_model)
     text_embeddings_clip = embeddings.create_text_embeddings_clip(words_dict, clip_model, device)
-    
+
     similarity_ft = compute_text_to_text_similarity(text_embeddings_ft)
     similarity_clip = compute_text_to_text_similarity(text_embeddings_clip)
 

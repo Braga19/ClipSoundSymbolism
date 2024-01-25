@@ -3,13 +3,13 @@ import sys
 import pandas as pd
 import numpy as np
 from PIL import Image
-from tqdm import tqdm_notebook
+from tqdm.notebook import tqdm
 import torch
 from torch.nn import Softmax
-from transformers import AutoFeatureExtractor, AutoModelForImageClassification
+from transformers import AutoImageProcessor, AutoModelForImageClassification
 
-parent_dir = os.path.dirname(os.getcwd())
-dataset_dir = os.path.join(parent_dir, 'dataset')
+parent_dir = os.getcwd()
+dataset_dir = os.path.abspath(os.path.join(parent_dir, 'dataset/images'))
 src_dir = os.path.join(parent_dir, 'src')
 
 sys.path.insert(0, src_dir)
@@ -21,35 +21,25 @@ df_characters_annotated =  read.characters_df()
 gender_df = read.get_subset('gender')
 age_df = read.get_subset('age')
 
-classifiers_gender = {
-    'rizvan': {
-        'extractor':  AutoFeatureExtractor.from_pretrained("rizvandwiki/gender-classification"),
-        'model': AutoModelForImageClassification.from_pretrained("rizvandwiki/gender-classification")
-    },
-
-    'rizvan2': {
-        'extractor': AutoFeatureExtractor.from_pretrained("rizvandwiki/gender-classification-2"),
-        'model': AutoModelForImageClassification.from_pretrained("rizvandwiki/gender-classification-2")
-    },
-
-    'leilab': {
-        'extractor': AutoFeatureExtractor.from_pretrained("Leilab/gender_class"),
-        'model': AutoModelForImageClassification.from_pretrained("Leilab/gender_class")
+classifiers_gender = { 
+    'crangana': {
+        'extractor': AutoImageProcessor.from_pretrained("crangana/trained-gender"),
+        'model': AutoModelForImageClassification.from_pretrained("crangana/trained-gender")
     }
 }
 
 classifiers_age = {
+     'cranage': {
+        'extractor': AutoImageProcessor.from_pretrained("crangana/trained-age"),
+        'model': AutoModelForImageClassification.from_pretrained("crangana/trained-age"),
+     },
+
     'nateraw': {
-        'extractor': AutoFeatureExtractor.from_pretrained("nateraw/vit-age-classifier"),
+        'extractor': AutoImageProcessor.from_pretrained("nateraw/vit-age-classifier"),
         'model': AutoModelForImageClassification.from_pretrained("nateraw/vit-age-classifier")
     },
-    'ibombVit': {
-        'extractor': AutoFeatureExtractor.from_pretrained("ibombonato/vit-age-classifier"),
-        'model': AutoModelForImageClassification.from_pretrained("ibombonato/vit-age-classifier")
-
-    },
     'ibombSwin': {
-        'extractor': AutoFeatureExtractor.from_pretrained("ibombonato/swin-age-classifier"),
+        'extractor': AutoImageProcessor.from_pretrained("ibombonato/swin-age-classifier"),
         'model': AutoModelForImageClassification.from_pretrained("ibombonato/swin-age-classifier")
     }
 }
@@ -73,21 +63,21 @@ def predict_gender(img_dataset):
     root_dir = os.path.join(dataset_dir, img_dataset)
 
     results = []
-    for classifier_name, classifier in tqdm_notebook(classifiers_gender.items(), desc='Classifier'):
+    for classifier_name, classifier in tqdm(classifiers_gender.items(), desc='Classifier'):
 
         model = classifier['model']
         extractor = classifier['extractor']
 
-        for name in tqdm_notebook(gender_df['name'].str.lower(), desc='Names'):
+        for name in tqdm(gender_df['name'].str.lower(), desc='Names'):
 
             for i in range(20):
 
                 path = os.path.join(root_dir, name, f'{name}_{i}.jpeg')
                 img = load_image(path)
                 if img is None:
-                    continue
+                    raise ValueError("img is None")
                 prob_scores = compute_probabilities(model, extractor, img)
-                if classifier_name == 'leilab':
+                if classifier_name == 'leilab' or classifier_name == 'crangana':
                     female_prob, male_prob = prob_scores[1].item(), prob_scores[0].item()
                 else:
                     female_prob, male_prob = prob_scores[0].item(), prob_scores[1].item()
@@ -102,7 +92,7 @@ def predict_gender(img_dataset):
 
     df_results = pd.DataFrame.from_dict(results)
 
-    return df_results.to_csv(f'gender_predictions_{img_dataset}.csv', index=False)
+    return df_results.to_csv(f'gender_predictions_{img_dataset}_2.csv', index=False)
 
 def predict_age(img_dataset):
 
@@ -110,23 +100,23 @@ def predict_age(img_dataset):
 
     results = []
 
-    for classifier_name, classifier in tqdm_notebook(classifiers_age.items(), desc='Classifier'):
+    for classifier_name, classifier in tqdm(classifiers_age.items(), desc='Classifier'):
 
         model = classifier['model']
         extractor = classifier['extractor']
 
-        for name in tqdm_notebook(age_df['name'].str.lower(), desc='Names'):
+        for name in tqdm(age_df['name'].str.lower(), desc='Names'):
             
             for i in range(20):
                 path = os.path.join(root_dir, name, f'{name}_{i}.jpeg')
                 img = load_image(path)
                 if img is None:
-                    continue
+                    raise ValueError("img is None")
                 prob_scores = compute_probabilities(model, extractor, img)
-                if classifier_name == 'nateraw':
-                    young_prob, old_prob = prob_scores[0:4].sum().item(), prob_scores[6:].sum().item()
+                if classifier_name == 'nateraw' or classifier_name == 'cranage':
+                    young_prob, old_prob = prob_scores[0:4].sum().item(), prob_scores[4:].sum().item()
                 else:
-                    young_prob, old_prob = prob_scores[0:3].sum().item(), prob_scores[5:].sum().item()
+                    young_prob, old_prob = prob_scores[0:3].sum().item(), prob_scores[3:].sum().item()
                 result = {
                     'classifier': classifier_name,
                     'name': name,
@@ -138,4 +128,17 @@ def predict_age(img_dataset):
 
     df_results = pd.DataFrame.from_dict(results)
 
-    return df_results.to_csv(f'age_predictions_{img_dataset}.csv', index=False)
+    return df_results.to_csv(f'age_predictions_{img_dataset}_2.csv', index=False)
+
+
+def main():
+    img_generator = ['SD_face', 'vqgan_face']
+    for generator in img_generator:
+        
+        predict_age(generator)
+        
+
+
+if __name__ == "__main__":
+
+    main()

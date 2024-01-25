@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import sys
 
-parent_dir = os.path.dirname(os.getcwd())
+parent_dir = os.getcwd()
 src_dir = os.path.join(parent_dir, 'src')
 
 
@@ -65,18 +65,23 @@ def compute_and_save_fleiss_kappa_per_type(fleiss_data, filename):
     fleiss_df.to_csv(filename, index=False)
     
 
+def main():
+    
+    # Process gender classification data
+    fleiss_gender = process_classification_data_per_type(gender_classification, 'female_prob', 'male_prob')
 
-# Process gender classification data
-fleiss_gender = process_classification_data_per_type(gender_classification, 'female_prob', 'male_prob')
+    # Process age classification data
+    fleiss_age = process_classification_data_per_type(age_classificaiton, 'young_prob', 'old_prob')
 
-# Process age classification data
-fleiss_age = process_classification_data_per_type(age_classificaiton, 'young_prob', 'old_prob')
+    # Compute Fleiss' kappa for gender classification per type and save to CSV
+    compute_and_save_fleiss_kappa_per_type(fleiss_gender, 'fleiss_gender.csv')
 
-# Compute Fleiss' kappa for gender classification per type and save to CSV
-compute_and_save_fleiss_kappa_per_type(fleiss_gender, 'fleiss_gender.csv')
+    # Compute Fleiss' kappa for age classification per type and save to CSV
+    compute_and_save_fleiss_kappa_per_type(fleiss_age, 'fleiss_age.csv')
 
-# Compute Fleiss' kappa for age classification per type and save to CSV
-compute_and_save_fleiss_kappa_per_type(fleiss_age, 'fleiss_age.csv')
+if __name__ == "__main__":
+
+    main()
 
 
 

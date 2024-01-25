@@ -1,3 +1,3 @@
 Image Generator,Fleiss' Kappa (real),Fleiss' Kappa (madeup),Fleiss Kappa (talking)
-Stable Diffusion,0.46,0.45,0.5
-VQGAN-CLIP,0.44,0.41,0.38
+Stable Diffusion,0.47,0.42,0.4
+VQGAN-CLIP,0.43,0.41,0.28

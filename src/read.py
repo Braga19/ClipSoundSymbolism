@@ -1,33 +1,21 @@
 import pandas as pd 
 import os 
 
+#directories
 parent_dir = os.getcwd()
 text_dataset_dir = os.path.join(parent_dir, 'dataset/texts')
 image_dataset_dir = os.path.join(parent_dir, 'dataset/images')
 results_dir = os.path.join(parent_dir, 'results')
 classifiers_dir = os.path.join(results_dir, 'classification')
 
-# Reading datasets 
+### Reading dataset 
 def characters_df():
 
     df = pd.read_csv(os.path.join(text_dataset_dir, 'avgRatings_annotated.csv'))
 
     return df.copy()
 
-def sabbatino_et_al():
-
-    df = pd.read_csv(os.path.join(text_dataset_dir, 'nonsense-words-emotion-intensities.csv'), sep=';')
-
-    return df.copy()
-
-def emotional_words():
-
-    df = pd.read_excel(os.path.join(text_dataset_dir, 'emotional_words.xlsx'))
-
-    return df.copy()
-
-
-# Modifying datasets for analysis
+### Modifying datasets for analysis
 def get_subset(attribute):
 
     '''get subset of characters_df scored on specific attribute (gender or age)'''
@@ -65,19 +53,4 @@ def prepare_dataset_for_pearson(attribute, img_generator, prob_col1):
     df = get_merge_dataset(attribute, img_generator)
     
     return df.groupby(['name', 'classifier'], as_index=False).agg({f'{prob_col1}': 'mean','type': 'first', 'rating.mean': 'first'})
-    
-
-def dataset_for_pearson_emotion():
-
-    '''
-    Merge the similarity_score_avg with the df_emotion for computing pearson correlation
-    '''
-
-    df_similarity_avg = get_avg_multimodal_similarity()
-    df_emotion = sabbatino_et_al()
-
-    # x gold-standard y predicted
-    merged_df =  df_emotion.merge(df_similarity_avg, on='Word').drop(columns=['IDs', 'ARPA Pron'])
-
-    return merged_df
 

@@ -1,7 +1,7 @@
 import os
 import sys
 
-parent_dir = os.path.dirname(os.getcwd())
+parent_dir = os.getcwd()
 src_dir = os.path.join(parent_dir, 'src')
 
 
@@ -66,7 +66,7 @@ def correlation_scatterplot(df, img_generator,attribute, tick_top, tick_bottom, 
             fig.add_trace(go.Scatter(x=x_t, y=y_fit, mode="lines", name="Best fit", line_color=color), row=1, col=i+1)
 
             # Update the x and y axis limits and labels with some padding
-            padding = 0.1  # adjust this value to change the amount of padding
+            padding = 0.1
             x_range = [xlimits[0] - (xlimits[1] - xlimits[0]) * padding, xlimits[1] + (xlimits[1] - xlimits[0]) * padding]
             y_range = [ylimits[0] - (ylimits[1] - ylimits[0]) * padding, ylimits[1] + (ylimits[1] - ylimits[0]) * padding]
             
@@ -77,19 +77,23 @@ def correlation_scatterplot(df, img_generator,attribute, tick_top, tick_bottom, 
         fig.update_yaxes(title= "<b>classifier's prediction</b>",title_standoff=0, row=1, col=1)
         fig.update_layout(title_text=f"<b>{img_generator} - Correlation between people's perception and {classifier} predictions about {attribute} of characters' name</b>")
 
-        filepath = os.path.dirname(os.getcwd())
 
-        pio.write_image(fig, os.path.join(filepath, f'plots/{attribute}/jpeg/{img_generator}_{classifier}_{attribute}.jpeg'), width=1200, height=600)
-        pio.write_html(fig, os.path.join(filepath, f'plots/{attribute}/html/{img_generator}_{classifier}_{attribute}.html'))
-
+        pio.write_image(fig, os.path.join(parent_dir, f'plots/{attribute}/jpeg/{img_generator}_{classifier}_{attribute}_correlation_plot.jpeg'), width=1200, height=600)
+        pio.write_html(fig, os.path.join(parent_dir, f'plots/{attribute}/html/{img_generator}_{classifier}_{attribute}_correlation_plot.html'))
 
 
-for img_gen, df in gender_dict.items():
+def main():
 
-    correlation_scatterplot(df, img_gen, 'gender', 'female', 'male', 'female_prob')
+    for img_gen, df in gender_dict.items():
 
-for img_gen, df in age_dict.items():
+        correlation_scatterplot(df, img_gen, 'gender', 'female', 'male', 'female_prob')
 
-    correlation_scatterplot(df, img_gen, 'age', 'old', 'young', 'old_prob')
+    for img_gen, df in age_dict.items():
+
+        correlation_scatterplot(df, img_gen, 'age', 'old', 'young', 'old_prob')
+
+if __name__ == "__main__":
+
+    main()
 
 

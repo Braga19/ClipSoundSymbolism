@@ -1,6 +1,6 @@
 # The Face of a Character called Gmork
 
-This repository contains the code and resources related to the paper "The Face of a Character called Gmork".
+This repository contains the code and resources related to the paper "The Face of a Character called Gmork" ([here](https://escholarship.org/uc/item/8jt0d5cv)).
 
 ## Overview
 
